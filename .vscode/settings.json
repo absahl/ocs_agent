@@ -1,0 +1,14 @@
+{
+    "files.readonlyInclude": {
+    "**/.cargo/registry/src/**/*.rs": true,
+    "**/.cargo/git/checkouts/**/*.rs": true,
+    "**/lib/rustlib/src/rust/library/**/*.rs": true,
+    },
+
+    "files.insertFinalNewline": true,
+    "files.trimTrailingWhitespace": true,
+
+    "editor.insertSpaces": true,
+    "editor.detectIndentation": false,
+    "editor.tabSize": 4,
+}
