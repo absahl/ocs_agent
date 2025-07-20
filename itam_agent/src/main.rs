@@ -1,9 +1,9 @@
 use std::process::Command;
 
-fn get_system_uuid() -> Result<String, String> {
-    let result = Command::new("bash")
+fn execute_command(command: &str) -> Result<String, String> {
+    let result = Command::new("sh")
         .arg("-c")
-        .arg("system_profiler SPHardwareDataType | grep 'Hardware UUID' | awk {'print $3'}")
+        .arg(command)
         .output();
 
     match result {
@@ -23,14 +23,49 @@ fn get_system_uuid() -> Result<String, String> {
 }
 
 fn main() {
-    println!("Starting with the name of Allah the most Merciful the most Benovelent");
-    match get_system_uuid() {
-        Ok(uuid) => {
-            println!("Command executed successfully!");
-            println!("Command output: {}", uuid);
+    println!("starting with the name of Allah the most Merciful the most Benovelent");
+
+    // system UUID
+    println!("fetching system UUID");
+    match execute_command("system_profiler SPHardwareDataType | grep 'Hardware UUID' | awk -F ':' {'print $2'}") {
+        Ok(system_uuid) => {
+            println!("system UUID: {}", system_uuid);
         }
         Err(e) => {
-            println!("{}", e);
+            println!("fetching system UUID failed with: {}", e);
+        }
+    }
+
+    // system model
+    println!("fetching system model");
+    match execute_command("system_profiler SPHardwareDataType | grep 'Model Identifier' | awk -F ':' {'print $2'}") {
+        Ok(model_identifier) => {
+            println!("system model: {}", model_identifier);
+        }
+        Err(e) => {
+            println!("fetching system model failed with: {}", e);
+        }
+    }
+
+    // system serial number
+    println!("fetching system serial number");
+    match execute_command("system_profiler SPHardwareDataType | grep 'Serial Number' | awk -F ':' {'print $2'}") {
+        Ok(serial_number) => {
+            println!("system serial number: {}", serial_number);
+        }
+        Err(e) => {
+            println!("fetching system serial number failed with: {}", e);
+        }
+    }
+
+    // system firmware version
+    println!("fetching system firmware version");
+    match execute_command("system_profiler SPHardwareDataType | grep 'System Firmware Version' | awk -F ':' {'print $2'}") {
+        Ok(firmware_version) => {
+            println!("system firmware version: {}", firmware_version);
+        }
+        Err(e) => {
+            println!("fetching system firmware version failed with: {}", e);
         }
     }
 }
