@@ -1,6 +1,8 @@
 use std::process::Command;
+use log;
 
 pub fn execute_command(command: &str) -> Result<String, String> {
+    log::trace!("executing command [{}]", command);
     let result = Command::new("sh")
         .arg("-c")
         .arg(command)
