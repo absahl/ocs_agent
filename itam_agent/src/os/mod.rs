@@ -16,3 +16,15 @@ pub fn get_system_serial_number() -> Result<String, String> {
 pub fn get_system_firmware_version() -> Result<String, String> {
     macos::get_system_firmware_version()
 }
+
+pub fn get_os_name() -> Result<String, String> {
+    macos::get_os_name()
+}
+
+pub fn get_os_version() -> Result<String, String> {
+    macos::get_os_version()
+}
+
+pub fn get_os_comments() -> Result<String, String> {
+    macos::get_os_comments()
+}

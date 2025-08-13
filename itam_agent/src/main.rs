@@ -38,6 +38,21 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         Err(e) => log::error!("failed to fetch system firmware version: {}", e),
     }
 
+    match os::get_os_name() {
+        Ok(os_name) => log::debug!("os name: {}", os_name),
+        Err(e) => log::error!("failed to fetch os name: {}", e),
+    }
+
+    match os::get_os_version() {
+        Ok(os_version) => log::debug!("os version: {}", os_version),
+        Err(e) => log::error!("failed to fetch os version: {}", e),
+    }
+
+    match os::get_os_comments() {
+        Ok(os_comments) => log::debug!("os comments: {}", os_comments),
+        Err(e) => log::error!("failed to fetch os comments: {}", e),
+    }
+
     log::info!("agent executed successfully");
 
     Ok(())
