@@ -18,11 +18,18 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         Err(e) => log::error!("failed to fetch system UUID: {}", e),
     }
 
-    // system model
-    log::trace!("fetching system model");
+    // system model identifier
+    log::trace!("fetching system model identifier");
     match hardware::bios::get_system_model() {
-        Ok(system_model) => log::debug!("system model: {}", system_model.trim()),
-        Err(e) => log::error!("failed to fetch system model: {}", e),
+        Ok(system_model) => log::debug!("system model identifier: {}", system_model.trim()),
+        Err(e) => log::error!("failed to fetch system model identifier: {}", e),
+    }
+
+    // system model name
+    log::trace!("fetching system model name");
+    match hardware::bios::get_system_model_name() {
+        Ok(system_model_name) => log::debug!("system model name: {}", system_model_name.trim()),
+        Err(e) => log::error!("failed to fetch system model name: {}", e),
     }
 
     // system serial number

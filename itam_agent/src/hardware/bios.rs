@@ -36,6 +36,24 @@ pub fn get_system_model() -> Result<String, String> {
     }
 }
 
+// perl equivalent: machine_name
+// sh equivalent: system_profiler SPHardwareDataType | grep 'Model Name'
+// result: MacBook Pro
+pub fn get_system_model_name() -> Result<String, String> {
+    log::trace!("fetching system model name");
+    match command::execute_command("system_profiler SPHardwareDataType | grep 'Model Name' | awk -F ':' {'print $2'}") {
+        Ok(model_name) => {
+            let trimmed = model_name.trim().to_string();
+            log::debug!("fetched system model name: {}", trimmed);
+            Ok(trimmed)
+        }
+        Err(e) => {
+            log::error!("failed to fetch system model name: {}", e);
+            Err(e)
+        }
+    }
+}
+
 // perl equivalent: serial_number
 // sh equivalent: system_profiler SPHardwareDataType | grep 'Serial Number (system)'
 // result: JJ97CDGJ9N
@@ -54,7 +72,7 @@ pub fn get_system_serial_number() -> Result<String, String> {
     }
 }
 
-// perl equivalent: os_loader_version
+// perl equivalent: boot_rom_version
 // sh equivalent: system_profiler SPHardwareDataType | grep 'System Firmware Version'
 // result: 11881.140.96
 pub fn get_system_firmware_version() -> Result<String, String> {
