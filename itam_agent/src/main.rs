@@ -10,40 +10,11 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     log::debug!("starting with the name of Allah the most Merciful the most Benovelent");
     log::info!("agent execution started");
 
-
-    // system UUID
-    log::trace!("fetching system UUID");
-    match hardware::bios::get_system_uuid() {
-        Ok(system_uuid) => log::debug!("system UUID: {}", system_uuid.trim()),
-        Err(e) => log::error!("failed to fetch system UUID: {}", e),
-    }
-
-    // system model identifier
-    log::trace!("fetching system model identifier");
-    match hardware::bios::get_system_model() {
-        Ok(system_model) => log::debug!("system model identifier: {}", system_model.trim()),
-        Err(e) => log::error!("failed to fetch system model identifier: {}", e),
-    }
-
-    // system model name
-    log::trace!("fetching system model name");
-    match hardware::bios::get_system_model_name() {
-        Ok(system_model_name) => log::debug!("system model name: {}", system_model_name.trim()),
-        Err(e) => log::error!("failed to fetch system model name: {}", e),
-    }
-
-    // system serial number
-    log::trace!("fetching system serial number");
-    match hardware::bios::get_system_serial_number() {
-        Ok(system_serial_number) => log::debug!("system serial number: {}", system_serial_number.trim()),
-        Err(e) => log::error!("failed to fetch system serial number: {}", e),
-    }
-
-    // system firmware version
-    log::trace!("fetching system firmware version");
-    match hardware::bios::get_system_firmware_version() {
-        Ok(system_firmware_version) => log::debug!("system firmware version: {}", system_firmware_version.trim()),
-        Err(e) => log::error!("failed to fetch system firmware version: {}", e),
+    // bios info
+    let bios_info = hardware::bios::get_bios_info();
+    match bios_info {
+        Ok(bios_info) => log::debug!("bios info: {:?}", bios_info),
+        Err(e) => log::error!("failed to fetch bios info: {}", e),
     }
 
     match software::os::get_os_name() {
